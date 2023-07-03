@@ -1,0 +1,35 @@
+from flask import Flask, request
+
+app = Flask(__name__)
+
+@app.route("/", methods=["GET", "POST"])
+def chatbot():
+    if request.method == "GET":
+        return '''
+            <h1>Welcome to McDonald's Chatbot</h1>
+            <p>How can I assist you today?</p>
+            <form method="POST">
+                <input type="text" name="user_input" placeholder="Your message" autocomplete="off" />
+                <button type="submit">Send</button>
+            </form>
+        '''
+    elif request.method == "POST":
+        user_input = request.form.get("user_input").lower()
+        
+        if user_input == "hello" or user_input == "hi":
+            return "Hello! How can I help you?"
+        elif user_input == "menu":
+            return "Our menu includes burgers, chicken sandwiches, salads, fries, and various beverages."
+        elif user_input == "locations":
+            return "We have McDonald's locations in many cities. Please provide your city name, and I can assist you with the nearest location."
+        elif user_input == "opening hours":
+            return "Most McDonald's locations open at 6 AM and close at midnight, but opening hours may vary by location. It's best to check with the specific restaurant you plan to visit."
+        elif user_input == "thank you" or user_input == "thanks":
+            return "You're welcome! If you have any more questions, feel free to ask."
+        elif user_input == "bye":
+            return "Goodbye! Have a great day!"
+        else:
+            return "I'm sorry, but I didn't understand your question. Could you please rephrase or ask something else?"
+
+if __name__ == "__main__":
+    app.run()
